@@ -37,31 +37,36 @@ def create_obstacles(sim_time, num_timesteps):
     obstacles = obst
     # Obstacle 2
     v = 0
-    p0 = np.array([6,0])
+    p0 = np.array([7,0])
     obst = create_robot(p0, v, 0, sim_time,
                         num_timesteps).reshape(4, num_timesteps, 1)
     obstacles = np.dstack((obstacles, obst))
     # Obstacle 3
     v = 0
-    p0 = np.array([0, 6])
+    p0 = np.array([0, 7])
     obst = create_robot(p0, v, -np.pi * 3 / 4, sim_time,
                         num_timesteps).reshape(4,num_timesteps, 1)
     obstacles = np.dstack((obstacles, obst))
     # Obstacle 4
     v = 0
-    p0 = np.array([6, 6])
+    p0 = np.array([7, 7])
     obst = create_robot(p0, v, np.pi * 3 / 4, sim_time,
                         num_timesteps).reshape(4,num_timesteps, 1)
     obstacles = np.dstack((obstacles, obst))
 
-    # Obstacle 4
-    v = 0
-    p0 = np.array([6, 6])
-    obst = create_robot(p0, v, np.pi * 3 / 4, sim_time,
+    # Obstacle 5
+    v = -2
+    p0 = np.array([0, 4.5])
+    obst = create_robot(p0, v, np.pi, sim_time,
                         num_timesteps).reshape(4,num_timesteps, 1)
     obstacles = np.dstack((obstacles, obst))
-    
-    print(obstacles.shape)
+
+    # Obstacle 6
+    v = -3
+    p0 = np.array([4.5, 9.5])
+    obst = create_robot(p0, v, np.pi/2, sim_time,
+                        num_timesteps).reshape(4,num_timesteps, 1)
+    obstacles = np.dstack((obstacles, obst))
     return obstacles
 
 
@@ -75,5 +80,4 @@ def create_robot(p0, v, theta, sim_time, num_timesteps):
     p0 = p0.reshape((2, 1))
     p = p0 + np.cumsum(v, axis=1) * (sim_time / num_timesteps)
     p = np.concatenate((p, v))
-    print(p.shape)
     return p

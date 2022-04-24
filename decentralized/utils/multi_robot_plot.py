@@ -21,10 +21,15 @@ def plot_robot_and_obstacles(robot, obstacles, robot_radius, num_steps, sim_time
                          robot_radius, facecolor='green', edgecolor='black')
     obstacle_list = []
     for obstacle in range(np.shape(obstacles)[2]):
-        # obstacle = Circle((0, 0), robot_radius,
-        #                   facecolor='aqua', edgecolor='black')
-        obstacle = Rectangle((0,0),8*robot_radius,8*robot_radius,facecolor='aqua', edgecolor='black')
-        obstacle_list.append(obstacle)
+        if obstacle < (np.shape(obstacles)[2]-2):
+            obstacle = Rectangle((0,0),6*robot_radius,6*robot_radius,facecolor='aqua', edgecolor='black')
+            obstacle_list.append(obstacle)
+        else:
+            obstacle = Rectangle((0,0),2*robot_radius,2*robot_radius,facecolor='aqua', edgecolor='black')
+            obstacle_list.append(obstacle)
+        #     # Adding another robot with constant velocity
+        #     obstacle = Circle((0, 5), robot_radius,facecolor='aqua', edgecolor='black')
+        #     obstacle_list.append(obstacle)
 
     def init():
         ax.add_patch(robot_patch)
@@ -36,8 +41,11 @@ def plot_robot_and_obstacles(robot, obstacles, robot_radius, num_steps, sim_time
     def animate(i):
         robot_patch.center = (robot[0, i], robot[1, i])
         for j in range(len(obstacle_list)):
-            # obstacle_list[j].center = (obstacles[0, i, j], obstacles[1, i, j])
-            obstacle_list[j].xy = (obstacles[0, i, j], obstacles[1, i, j])
+            # if j < (len(obstacle_list)-1):
+                obstacle_list[j].xy = (obstacles[0, i, j], obstacles[1, i, j])
+            # else:
+            #     obstacle_list[j].centre = (obstacles[0, i, j], obstacles[1, i,j])
+
         line.set_data(robot[0, :i], robot[1, :i])
         return [robot_patch] + [line] + obstacle_list
 
